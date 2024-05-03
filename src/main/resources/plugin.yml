@@ -1,0 +1,3 @@
+name: KitPvP
+version: '${version}'
+main: de.themoory.kitpvp.KitPvP
