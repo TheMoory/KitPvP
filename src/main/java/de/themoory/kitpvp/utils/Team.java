@@ -9,10 +9,10 @@ import java.util.UUID;
 
 public class Team {
 
-    private ArrayList<Player> players;
+    private final ArrayList<Player> players;
 
-    private int maxPlayers;
-    private int teamID;
+    private final int maxPlayers;
+    private final int teamID;
 
     private HashMap<UUID, Integer> deaths;
     public Team(Player player, int teamID, int maxPlayers){
@@ -34,6 +34,7 @@ public class Team {
 
     public void removePlayer(Player player){
         this.players.remove(player);
+        this.deaths.remove(player.getUniqueId());
     }
 
     public ArrayList<Player> getPlayers() {

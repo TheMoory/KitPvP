@@ -1,5 +1,6 @@
 package de.themoory.kitpvp.utils;
 
+import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
@@ -21,7 +22,11 @@ public abstract class GameSetting {
 
     public void onMove(PlayerMoveEvent e){}
 
-    public void onAchievementAwarded(PlayerAchievementAwardedEvent e){}
+    public void onAchievementAwarded(PlayerAchievementAwardedEvent e){
+        if(e instanceof Player) {
+            e.setCancelled(true);
+        }
+    }
 
     public void onInventoryClick(InventoryClickEvent e){}
 

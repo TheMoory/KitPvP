@@ -31,7 +31,7 @@ public class InviteHandler extends GameSetting {
                     gameOfDamager = new Game(KitPvP.getInstance(), (Player)e.getDamager(), Arena.MODE.one_vs_one);
                     gameOfDamager.setMap(Arena.MAP.DEFAULT);
                     gameOfDamager.setKit(new Soup());
-                    KitPvP.getInstance().addToStagedGames(gameOfDamager);
+                    //KitPvP.getInstance().addToStagedGames(gameOfDamager); Wird schon beim ersteller des Game Objektes hinzugefügt --- Oder besser hier machen?
 
                 }
                 // add player to invite list of game

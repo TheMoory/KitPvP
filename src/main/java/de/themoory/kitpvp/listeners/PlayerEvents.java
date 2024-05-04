@@ -40,9 +40,6 @@ public class PlayerEvents implements Listener {
 
     @EventHandler
     public void PlayerAchievementAwardedEvent(PlayerAchievementAwardedEvent e) {
-        if(e instanceof Player) {
-            e.setCancelled(true);
-        }
         GameSetting[] settings = Utils.getGameSettingsFromGame(KitPvP.getInstance().getCurrentGameOfPlayer(e.getPlayer()));
         for(GameSetting gameSetting : settings){
             gameSetting.onAchievementAwarded(e);

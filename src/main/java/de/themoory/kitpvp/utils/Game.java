@@ -9,23 +9,26 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 public class Game {
-    private ArrayList<Team> teams;
-    private ArrayList<UUID> invites;
+    private final ArrayList<Team> teams;
 
-    private ArrayList<Player> spectators;
+    private final ArrayList<Team> aliveTeams;
+    private final ArrayList<Team> deadTeams;
+    private final ArrayList<UUID> invites;
+
+    private final ArrayList<Player> spectators;
     private Kit kit;
 
     private Arena arena;
 
     private Arena.MAP map;
 
-    private KitPvP instance;
+    private final KitPvP instance;
 
     private GameState gameState;
 
-    private Arena.MODE mode;
+    private final Arena.MODE mode;
 
-    private UUID uuid;
+    private final UUID uuid;
 
 
     public Game(KitPvP instance, Player firstPlayer, Arena.MODE mode){
@@ -37,10 +40,13 @@ public class Game {
         this.map = null;
         this.teams = new ArrayList<>();
         this.invites =new ArrayList<>();
+        this.aliveTeams = new ArrayList<>();
+        this.deadTeams = new ArrayList<>();
         this.teams.add(new Team(firstPlayer, 0, mode.getPlayerCount()/mode.getTeamCount()));
         for (int i = 1; i <= mode.getPlayerCount()/mode.getTeamCount(); i++) {
             this.teams.add(new Team(null, i, mode.getPlayerCount()/mode.getTeamCount()));
         }
+        aliveTeams.addAll(teams);
         this.spectators = new ArrayList<>();
         this.gameState = GameState.WAITING;
         instance.addToStagedGames(this);
@@ -59,13 +65,25 @@ public class Game {
     }
 
     public void checkIfRoundFull(){
-        int playerCount = 0;
         for(Team team : teams){
             if(!team.isFull()){
                 return;
-            };
+            }
         }
         start();
+    }
+
+    public void addDeadTeam(Team team){
+        aliveTeams.remove(team);
+        deadTeams.add(team);
+    }
+
+    public ArrayList<Team> getAliveTeams() {
+        return aliveTeams;
+    }
+
+    public ArrayList<Team> getDeadTeams() {
+        return deadTeams;
     }
 
     public void setKit(Kit kit){
@@ -142,14 +160,14 @@ public class Game {
 
     public void onEnd(int winnerTeamID){
         instance.removeCurrentGames(this);
-        Bukkit.getScheduler().scheduleSyncDelayedTask(KitPvP.getInstance(), new Runnable() {
-            @Override
-            public void run() {
-                for(Team team : teams){
-                    for(Player player : team.getPlayers()){
-                        player.teleport(new Location(Bukkit.getWorld("world"), 0, 100, 0, 0, 0));
-                    }
+        Bukkit.getScheduler().scheduleSyncDelayedTask(KitPvP.getInstance(), () -> {
+            for(Team team : teams){
+                for(Player player : team.getPlayers()){
+                    player.teleport(new Location(Bukkit.getWorld("world"), 0, 100, 0, 0, 0));
                 }
+            }
+            for(Player player : getSpectators()){
+                player.teleport(new Location(Bukkit.getWorld("world"), 0, 100, 0, 0, 0));
             }
         }, 4);
 
@@ -160,7 +178,7 @@ public class Game {
         NO_KIT_SELECTED,
         NOT_ENOUGH_PLAYERS,
         NO_MAP_SELECTED,
-        NO_FREE_ARENA_FOUND;
+        NO_FREE_ARENA_FOUND
 
 
     }
@@ -200,7 +218,7 @@ public class Game {
 
     public enum GameState{
         WAITING,
-        RUNNING;
+        RUNNING
     }
 
 
