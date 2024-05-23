@@ -14,8 +14,8 @@ public class ArenaPool {
     public ArenaPool(){
         arenas = new ArrayList<>();
         HashMap<String, Location> spawns = new HashMap<>();
-        spawns.put("0_0", new Location(Bukkit.getWorld("world"), 0,100,0,0,0));
-        spawns.put("1_0", new Location(Bukkit.getWorld("world"), 0,100,0,0,0));
+        spawns.put("0_0", new Location(Bukkit.getWorld("world"), 40,101,0,90,0));
+        spawns.put("1_0", new Location(Bukkit.getWorld("world"), -40,101,0,-90,0));
         Arena arena1 = new Arena(Arena.MAP.DEFAULT, 2, 2, 2, spawns);
         arenas.add(arena1);
     }

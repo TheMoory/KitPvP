@@ -1,27 +1,29 @@
 package de.themoory.kitpvp.utils;
 
-import de.themoory.kitpvp.gamesettings.NoHunger;
-import org.bukkit.entity.Item;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public abstract class Kit {
 
     protected HashMap<Integer, ItemStack> inventory;
+
+    protected HashMap<Integer, ItemStack> armor;
     protected GameSetting[] settings;
 
     public Kit(){
         inventory = new HashMap<>();
+        armor = new HashMap<>();
 
         createInventory();
         createSettings();
     }
     public HashMap<Integer, ItemStack> getInventory(){
         return inventory;
+    }
+
+    public HashMap<Integer, ItemStack> getArmor() {
+        return armor;
     }
 
     public GameSetting[] getGameSettings() {

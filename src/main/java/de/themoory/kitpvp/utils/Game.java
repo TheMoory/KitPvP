@@ -141,7 +141,7 @@ public class Game {
             return GameStartResult.NOT_ENOUGH_PLAYERS;
         }
 
-        // Teleport players to the spawnpoints in the arena
+        // Teleport players to the spawn points in the arena
         for(Team team : teams){
             int i = 0;
             for(Player player : team.getPlayers()){
@@ -163,11 +163,18 @@ public class Game {
         Bukkit.getScheduler().scheduleSyncDelayedTask(KitPvP.getInstance(), () -> {
             for(Team team : teams){
                 for(Player player : team.getPlayers()){
-                    player.teleport(new Location(Bukkit.getWorld("world"), 0, 100, 0, 0, 0));
+                    player.getInventory().clear();
+                    setInventory(Utils.getInventoryFromGame(null),player);
+                    player.getInventory().setHelmet(null);
+                    player.getInventory().setChestplate(null);
+                    player.getInventory().setLeggings(null);
+                    player.getInventory().setBoots(null);
+                    player.setHealth(20);
+                    player.teleport(new Location(Bukkit.getWorld("world"), 63, 85, -65, 0, 0));
                 }
             }
             for(Player player : getSpectators()){
-                player.teleport(new Location(Bukkit.getWorld("world"), 0, 100, 0, 0, 0));
+                player.teleport(new Location(Bukkit.getWorld("world"), 63, 85, -65, 0, 0));
             }
         }, 4);
 

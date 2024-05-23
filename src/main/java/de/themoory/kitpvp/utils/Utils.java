@@ -1,7 +1,6 @@
 package de.themoory.kitpvp.utils;
 
 import de.themoory.kitpvp.KitPvP;
-import de.themoory.kitpvp.gamesettings.InviteHandler;
 import de.themoory.kitpvp.kits.Lobby;
 import org.bukkit.entity.Player;
 

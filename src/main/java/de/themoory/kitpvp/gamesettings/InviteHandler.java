@@ -21,12 +21,14 @@ public class InviteHandler extends GameSetting {
             // check if damager is in invite list of game of damaged: if yes join game
             if(gameOfDamager == null && gameOfDamaged != null && gameOfDamaged.isInvited((Player) e.getDamager())){
                 gameOfDamaged.addPlayer((Player) e.getDamager());
+                e.setCancelled(true);
                 return;
             }
 
             // check if damaged is already in a game, don't invite
             if(gameOfDamaged != null) {
             } else {
+                e.setCancelled(true);
                 if(gameOfDamager == null){
                     gameOfDamager = new Game(KitPvP.getInstance(), (Player)e.getDamager(), Arena.MODE.one_vs_one);
                     gameOfDamager.setMap(Arena.MAP.DEFAULT);
@@ -36,9 +38,7 @@ public class InviteHandler extends GameSetting {
                 }
                 // add player to invite list of game
                 gameOfDamager.addInvite((Player)e.getEntity());
-
             }
-
         }
     }
 }
