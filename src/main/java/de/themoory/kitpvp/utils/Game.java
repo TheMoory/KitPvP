@@ -141,17 +141,12 @@ public class Game {
             return GameStartResult.NOT_ENOUGH_PLAYERS;
         }
 
-        // Teleport players to the spawn points in the arena
-        for(Team team : teams){
-            int i = 0;
-            for(Player player : team.getPlayers()){
-                player.teleport(arena.getSpawnLocation(team.getTeamID(), i));
-                for(int i1 : kit.getInventory().keySet()){
-                    player.getInventory().setItem(i1, kit.getInventory().get(i1));
-                }
-                i++;
-            }
+        //Starting
+
+        for(GameSetting gameSetting : getKit().getGameSettings()){
+            gameSetting.onGameStart();
         }
+
         gameState = GameState.RUNNING;
         instance.removeStagedGames(this);
         instance.addToCurrentGames(this);

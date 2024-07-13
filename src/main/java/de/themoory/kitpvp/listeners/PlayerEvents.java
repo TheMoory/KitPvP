@@ -1,9 +1,7 @@
 package de.themoory.kitpvp.listeners;
 
 import de.themoory.kitpvp.KitPvP;
-import de.themoory.kitpvp.utils.Game;
 import de.themoory.kitpvp.utils.GameSetting;
-import de.themoory.kitpvp.utils.Kit;
 import de.themoory.kitpvp.utils.Utils;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -66,9 +64,8 @@ public class PlayerEvents implements Listener {
     }
 
     @EventHandler
-    public void OnDamage(EntityDamageEvent e) {
+    public void onDamage(EntityDamageEvent e) {
         if(e.getEntity() instanceof Player) {
-
             GameSetting[] settings = Utils.getGameSettingsFromGame(KitPvP.getInstance().getCurrentGameOfPlayer((Player) e.getEntity()));
             for (GameSetting gameSetting : settings) {
                 gameSetting.onDamage(e);
