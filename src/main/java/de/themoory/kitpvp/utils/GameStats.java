@@ -28,32 +28,38 @@ public class GameStats {
     }
 
     public enum STATSTYPE {
-        KILLS(0),
-        DEATHS(0),
-        HITS(0),
-        MISSED_HITS(0),
-        DAMAGE_RECEIVED(0d),
-        DAMAGAE_CAUSED(0d),
-        TIME(0),
+        KILLS(0, "Kills"),
+        DEATHS(0, "Deaths"),
+        HITS(0, "Hits"),
+        MISSED_HITS(0, "Missed Hits"),
+        DAMAGE_RECEIVED(0d, "Damage Received"),
+        DAMAGAE_CAUSED(0d, "Damage Caused"),
+        TIME(0, "Time"),
 
 
 
         //custom kit settings
 
-        EATEN_SOUPS(0),
-        HEALED(0d),
+        EATEN_SOUPS(0, "Eaten Soups"),
+        HEALED(0d, "Healed"),
         ;
 
         private final Object value;
 
-        STATSTYPE(Object value) {
+        private final String name;
+
+        STATSTYPE(Object value, String name) {
             this.value = value;
+            this.name = name;
         }
 
         public Object getDefaultValue(){
             return value;
         }
 
+        public String getName(){
+            return name;
+        }
     }
 
 

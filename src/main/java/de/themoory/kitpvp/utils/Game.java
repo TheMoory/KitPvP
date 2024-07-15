@@ -154,6 +154,7 @@ public class Game {
     }
 
     public void onEnd(int winnerTeamID){
+        arena.setState(Arena.STATE.RESTARTING);
         instance.removeCurrentGames(this);
         Bukkit.getScheduler().scheduleSyncDelayedTask(KitPvP.getInstance(), () -> {
             for(Team team : teams){

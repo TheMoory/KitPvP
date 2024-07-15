@@ -16,8 +16,14 @@ public class ArenaPool {
         HashMap<String, Location> spawns = new HashMap<>();
         spawns.put("0_0", new Location(Bukkit.getWorld("world"), 40,101,0,90,0));
         spawns.put("1_0", new Location(Bukkit.getWorld("world"), -40,101,0,-90,0));
-        Arena arena1 = new Arena(Arena.MAP.DEFAULT, 2, 2, 2, spawns);
-        arenas.add(arena1);
+        Arena arena = new Arena(Arena.MAP.DEFAULT, 2, 2, 2, spawns);
+        arenas.add(arena);
+
+        spawns.put("0_0", new Location(Bukkit.getWorld("world"), 260,147,85,0,0));
+        spawns.put("1_0", new Location(Bukkit.getWorld("world"), 260,147,99,180,0));
+        arena = new Arena(Arena.MAP.KNOCKBACK, 2, 2, 2, spawns);
+        arenas.add(arena);
+
     }
 
 
@@ -27,6 +33,7 @@ public class ArenaPool {
         for(Arena arena : arenas){
             if(arena.getMapType().equals(map)){
                 if(arena.getState().equals(Arena.STATE.WAITING)){
+                    arena.setState(Arena.STATE.RUNNING);
                     return arena;
                 }
             }

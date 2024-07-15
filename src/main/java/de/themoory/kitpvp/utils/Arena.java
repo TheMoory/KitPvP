@@ -2,7 +2,6 @@ package de.themoory.kitpvp.utils;
 
 import org.bukkit.Location;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -65,12 +64,16 @@ public class Arena {
         return map;
     }
 
+    public void setState(STATE state) {
+        this.state = state;
+    }
 
     public enum MAP{
         DEFAULT,
         GLADIATOR,
         BAUM,
-        EIS;
+        EIS,
+        KNOCKBACK;
     }
 
     public enum MODE{

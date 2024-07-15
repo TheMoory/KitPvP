@@ -1,9 +1,14 @@
 package de.themoory.kitpvp.gamesettings;
 
 import de.themoory.kitpvp.utils.*;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.event.block.Action;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 
 import java.util.ArrayList;
 
@@ -49,17 +54,19 @@ public class GameStatsHandler extends GameSetting {
         for(Team team : getGame().getTeams()){
             for(Player player : team.getPlayers()){
                 GameStats gameStats = getGameStatsFromPlayer(player);
+                player.sendMessage(ChatColor.GREEN + "------" + ChatColor.DARK_RED + " Stats " + ChatColor.GREEN + "-------");
                 for(GameStats.STATSTYPE statstype : statsTypes){
                     assert gameStats != null;
                     if(statstype.equals(GameStats.STATSTYPE.TIME)){
                         long start = (Long) gameStats.getStat(statstype);
                         long now = System.currentTimeMillis();
                         long duration = (now - start) / 1000;
-                        player.sendMessage(ChatColor.GRAY + statstype.toString() + " " + ChatColor.GREEN + duration + " sec");
+                        player.sendMessage(ChatColor.GRAY + statstype.getName() + " " + ChatColor.GREEN + duration + " sec");
                     }else {
-                        player.sendMessage(ChatColor.GRAY + statstype.toString() + " " + ChatColor.GREEN + gameStats.getStat(statstype));
+                        player.sendMessage(ChatColor.GRAY + statstype.getName() + " " + ChatColor.GREEN + gameStats.getStat(statstype));
                     }
                 }
+                player.sendMessage(ChatColor.GREEN + "------" + ChatColor.DARK_RED + " ------ " + ChatColor.GREEN + "-------");
             }
         }
     }
@@ -74,14 +81,34 @@ public class GameStatsHandler extends GameSetting {
 
     @Override
     public void onDamage(EntityDamageEvent e){
+        if(e.isCancelled()) return;
         if(kit.getGame().getGameState().equals(Game.GameState.RUNNING)){
-            Player player = (Player) e.getEntity();
-            GameStats gameStats = getGameStatsFromPlayer(player);
-            assert gameStats != null;
-            gameStats.setStat(GameStats.STATSTYPE.DAMAGE_RECEIVED, (double) gameStats.getStat(GameStats.STATSTYPE.DAMAGE_RECEIVED) + e.getDamage());
+            if(e.getEntityType().equals(EntityType.PLAYER)){
+                Player player = (Player) e.getEntity();
+                GameStats gameStats = getGameStatsFromPlayer(player);
+                assert gameStats != null;
+                gameStats.setStat(GameStats.STATSTYPE.DAMAGE_RECEIVED, (double) gameStats.getStat(GameStats.STATSTYPE.DAMAGE_RECEIVED) + e.getDamage());
+            }
         }
-
+    }
+    @Override
+    public void onDamageByEntity(EntityDamageByEntityEvent event){
+        if(kit.getGame().getGameState().equals(Game.GameState.RUNNING)){
+            Player damager = (Player) event.getDamager();
+            GameStats gameStats = getGameStatsFromPlayer(damager);
+            assert gameStats != null;
+            gameStats.setStat(GameStats.STATSTYPE.DAMAGAE_CAUSED, (double) gameStats.getStat(GameStats.STATSTYPE.DAMAGAE_CAUSED) + event.getDamage());
+            gameStats.setStat(GameStats.STATSTYPE.HITS, (int) gameStats.getStat(GameStats.STATSTYPE.HITS) + 1);
+        }
     }
 
-
+    @Override
+    public void onPlayerInteract(PlayerInteractEvent event){
+        if(kit.getGame().getGameState().equals(Game.GameState.RUNNING)){
+            GameStats gameStats = getGameStatsFromPlayer(event.getPlayer());
+            if(event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK){
+                gameStats.setStat(GameStats.STATSTYPE.MISSED_HITS, (int) gameStats.getStat(GameStats.STATSTYPE.MISSED_HITS) + 1);
+            }
+        }
+    }
 }

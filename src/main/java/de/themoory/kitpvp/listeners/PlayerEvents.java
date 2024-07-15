@@ -12,6 +12,7 @@ import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerAchievementAwardedEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.weather.WeatherChangeEvent;
 
@@ -90,6 +91,14 @@ public class PlayerEvents implements Listener {
         GameSetting[] settings = Utils.getGameSettingsFromGame(KitPvP.getInstance().getCurrentGameOfPlayer(e.getEntity()));
         for (GameSetting gameSetting : settings) {
             gameSetting.onDeath(e);
+        }
+    }
+
+    @EventHandler
+    public void onPlayerInteract(PlayerInteractEvent e){
+        GameSetting[] settings = Utils.getGameSettingsFromGame(KitPvP.getInstance().getCurrentGameOfPlayer(e.getPlayer()));
+        for (GameSetting gameSetting : settings) {
+            gameSetting.onPlayerInteract(e);
         }
     }
 }

@@ -1,6 +1,7 @@
 package de.themoory.kitpvp.gamesettings;
 
 import de.themoory.kitpvp.KitPvP;
+import de.themoory.kitpvp.kits.Knockback;
 import de.themoory.kitpvp.kits.Soup;
 import de.themoory.kitpvp.utils.Arena;
 import de.themoory.kitpvp.utils.Game;
@@ -31,8 +32,8 @@ public class InviteHandler extends GameSetting {
                 e.setCancelled(true);
                 if(gameOfDamager == null){
                     gameOfDamager = new Game(KitPvP.getInstance(), (Player)e.getDamager(), Arena.MODE.one_vs_one);
-                    gameOfDamager.setMap(Arena.MAP.DEFAULT);
-                    gameOfDamager.setKit(new Soup());
+                    gameOfDamager.setMap(Arena.MAP.KNOCKBACK);
+                    gameOfDamager.setKit(new Knockback());
                     //KitPvP.getInstance().addToStagedGames(gameOfDamager); Wird schon beim ersteller des Game Objektes hinzugefügt --- Oder besser hier machen?
 
                 }
