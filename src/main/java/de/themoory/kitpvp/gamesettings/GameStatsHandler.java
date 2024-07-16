@@ -94,6 +94,7 @@ public class GameStatsHandler extends GameSetting {
     @Override
     public void onDamageByEntity(EntityDamageByEntityEvent event){
         if(kit.getGame().getGameState().equals(Game.GameState.RUNNING)){
+            if(!(event.getDamager() instanceof Player)) return;
             Player damager = (Player) event.getDamager();
             GameStats gameStats = getGameStatsFromPlayer(damager);
             assert gameStats != null;

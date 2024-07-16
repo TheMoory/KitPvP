@@ -6,6 +6,7 @@ import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.sql.SQLException;
@@ -17,8 +18,6 @@ public class JoinListener implements Listener {
         e.getPlayer().teleport(new Location(e.getPlayer().getWorld(), 63, 83, -65));
         ItemStack sword = new ItemStack(Material.DIAMOND_SWORD, 1);
         e.getPlayer().getInventory().setItem(0, sword);
-
-
     }
 
 }

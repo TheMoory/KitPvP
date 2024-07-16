@@ -19,8 +19,13 @@ public class Knockback extends Kit {
         ItemMeta stickMeta = stick.getItemMeta();
         stickMeta.addEnchant(Enchantment.KNOCKBACK,3, true);
         stick.setItemMeta(stickMeta);
+        ItemStack perl = new ItemStack(Material.ENDER_PEARL, 16);
+        ItemStack water = new ItemStack(Material.WATER_BUCKET, 1);
 
         inventory.put(0, stick);
+        inventory.put(1, perl);
+        inventory.put(2, water);
+        inventory.put(3, water);
     }
 
     @Override

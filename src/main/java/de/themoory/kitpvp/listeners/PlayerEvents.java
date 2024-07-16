@@ -6,14 +6,13 @@ import de.themoory.kitpvp.utils.Utils;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.event.player.PlayerAchievementAwardedEvent;
-import org.bukkit.event.player.PlayerDropItemEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.event.weather.WeatherChangeEvent;
 
 import java.sql.SQLException;
@@ -99,6 +98,38 @@ public class PlayerEvents implements Listener {
         GameSetting[] settings = Utils.getGameSettingsFromGame(KitPvP.getInstance().getCurrentGameOfPlayer(e.getPlayer()));
         for (GameSetting gameSetting : settings) {
             gameSetting.onPlayerInteract(e);
+        }
+    }
+
+    @EventHandler
+    public void onBlockBreak(BlockBreakEvent e){
+        GameSetting[] settings = Utils.getGameSettingsFromGame(KitPvP.getInstance().getCurrentGameOfPlayer(e.getPlayer()));
+        for (GameSetting gameSetting : settings) {
+            gameSetting.onBlockBreak(e);
+        }
+    }
+
+    @EventHandler
+    public void onBlockPlace(BlockPlaceEvent e){
+        GameSetting[] settings = Utils.getGameSettingsFromGame(KitPvP.getInstance().getCurrentGameOfPlayer(e.getPlayer()));
+        for (GameSetting gameSetting : settings) {
+            gameSetting.onBlockPlace(e);
+        }
+    }
+
+    @EventHandler
+    public void onPlayerBucketEmpty(PlayerBucketEmptyEvent e){
+        GameSetting[] settings = Utils.getGameSettingsFromGame(KitPvP.getInstance().getCurrentGameOfPlayer(e.getPlayer()));
+        for (GameSetting gameSetting : settings) {
+            gameSetting.onPlayerBucketEmpty(e);
+        }
+    }
+
+    @EventHandler
+    public void onPlayerBucketFill(PlayerBucketFillEvent e){
+        GameSetting[] settings = Utils.getGameSettingsFromGame(KitPvP.getInstance().getCurrentGameOfPlayer(e.getPlayer()));
+        for (GameSetting gameSetting : settings) {
+            gameSetting.onPlayerBucketFill(e);
         }
     }
 }
