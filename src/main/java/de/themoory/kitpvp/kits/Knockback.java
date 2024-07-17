@@ -8,6 +8,8 @@ import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import java.util.ArrayList;
 
@@ -45,6 +47,10 @@ public class Knockback extends Kit {
                 new Souping(this),
                 new OneLive(this),
                 new NoFallDamage(this),
+                //new ConstantEffect(this, new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 9999999, 999999,false, false)),
+                new DeathUnderHeight(this, 0),
+                new PreventBreakingBlocks(this),
+                new RemovePlacedBlocks(this)
         };
     }
 }

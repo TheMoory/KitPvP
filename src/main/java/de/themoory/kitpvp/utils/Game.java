@@ -4,8 +4,10 @@ import de.themoory.kitpvp.KitPvP;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.UUID;
 
 public class Game {
@@ -88,6 +90,7 @@ public class Game {
 
     public void setKit(Kit kit){
         this.kit = kit;
+        this.kit.setGame(this);
     }
 
     public void setArena(Arena arena){
@@ -156,24 +159,11 @@ public class Game {
     public void onEnd(int winnerTeamID){
         arena.setState(Arena.STATE.RESTARTING);
         instance.removeCurrentGames(this);
-        Bukkit.getScheduler().scheduleSyncDelayedTask(KitPvP.getInstance(), () -> {
-            for(Team team : teams){
-                for(Player player : team.getPlayers()){
-                    player.getInventory().clear();
-                    setInventory(Utils.getInventoryFromGame(null),player);
-                    player.getInventory().setHelmet(null);
-                    player.getInventory().setChestplate(null);
-                    player.getInventory().setLeggings(null);
-                    player.getInventory().setBoots(null);
-                    player.setHealth(20);
-                    player.teleport(new Location(Bukkit.getWorld("world"), 63, 85, -65, 0, 0));
-                }
-            }
-            for(Player player : getSpectators()){
-                player.teleport(new Location(Bukkit.getWorld("world"), 63, 85, -65, 0, 0));
-            }
-        }, 4);
-
+        GameSetting[] settings = Utils.getGameSettingsFromGame(this);
+        for(GameSetting gameSetting : settings){
+            gameSetting.onGameEnd();
+        }
+        arena.setState(Arena.STATE.WAITING);
     }
 
     public enum GameStartResult{

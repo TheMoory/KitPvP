@@ -76,10 +76,8 @@ public class PlayerEvents implements Listener {
     @EventHandler
     public void onEntityDamageByEntityEvent(EntityDamageByEntityEvent e){
         if(e.getEntity() instanceof Player) {
-            ((Player) e.getEntity()).chat("Listener activated!");
             GameSetting[] settings = Utils.getGameSettingsFromGame(KitPvP.getInstance().getCurrentGameOfPlayer((Player) e.getEntity()));
             for (GameSetting gameSetting : settings) {
-                ((Player) e.getEntity()).chat("Setting:" + gameSetting);
                 gameSetting.onDamageByEntity(e);
             }
         }

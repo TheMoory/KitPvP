@@ -8,13 +8,12 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.player.PlayerAchievementAwardedEvent;
-import org.bukkit.event.player.PlayerDropItemEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.*;
 
 public abstract class GameSetting {
-    public GameSetting(){
+    protected Kit kit;
+    public GameSetting(Kit k){
+        this.kit = k;
     }
     public void onHunger(FoodLevelChangeEvent e){}
 
@@ -38,4 +37,31 @@ public abstract class GameSetting {
 
     public void onDeath(PlayerDeathEvent e){}
 
+    public void onGameEnd(){}
+
+    public void onGameStart(){}
+
+    public Game getGame(){
+        return kit.getGame();
+    }
+
+    public void onPlayerInteract(PlayerInteractEvent e){
+    }
+
+    public void onBlockPlace(BlockPlaceEvent e){
+    }
+
+    public void onBlockBreak(BlockBreakEvent e) {}
+
+    public void onPlayerQuit(PlayerQuitEvent e){}
+
+    public void onPlayerBucketFill(PlayerBucketFillEvent e){
+
+    }
+
+    public void onPlayerBucketEmpty(PlayerBucketEmptyEvent e){
+
+    }
+
+    public void onSoup(Object o){}
 }

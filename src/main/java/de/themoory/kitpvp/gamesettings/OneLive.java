@@ -3,22 +3,34 @@ package de.themoory.kitpvp.gamesettings;
 import de.themoory.kitpvp.KitPvP;
 import de.themoory.kitpvp.utils.*;
 import org.bukkit.GameMode;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 
 import java.util.UUID;
 
 public class OneLive extends GameSetting {
 
-    public OneLive(){
+    public OneLive(Kit k){
+        super(k);
 
     }
 
 
     @Override
     public void onDeath(PlayerDeathEvent e) {
-        Game game = KitPvP.getInstance().getCurrentGameOfPlayer(e.getEntity());
-        Player player = e.getEntity();
+        handleDeath(e.getEntity());
+    }
+
+    @Override
+    public void onPlayerQuit(PlayerQuitEvent e) {
+        handleDeath(e.getPlayer());
+    }
+
+    private void handleDeath(Player player){
+
+        Game game = KitPvP.getInstance().getCurrentGameOfPlayer(player);
         assert game != null;
         if(game.getMode().equals(Arena.MODE.one_vs_one)){
             for(Team team : game.getTeams()){

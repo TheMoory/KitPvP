@@ -13,7 +13,8 @@ public class XLive extends GameSetting {
     private final int deathsToTeamEnd;
     private final boolean countPerPlayer;
 
-    public XLive(int deathsToTeamEnd, boolean countPerPlayer){
+    public XLive(Kit k, int deathsToTeamEnd, boolean countPerPlayer){
+        super(k);
         this.deathsToTeamEnd = deathsToTeamEnd;
         this.countPerPlayer = countPerPlayer;
     }
