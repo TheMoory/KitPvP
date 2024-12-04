@@ -2,6 +2,7 @@ package de.themoory.kitpvp.utils;
 
 import org.bukkit.inventory.ItemStack;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public abstract class Kit {
@@ -16,6 +17,8 @@ public abstract class Kit {
     public Kit(){
         inventory = new HashMap<>();
         armor = new HashMap<>();
+        possibleMaps = new ArrayList<>();
+        settings = new GameSetting[]{};
 
         createInventory();
         createSettings();
@@ -40,7 +43,7 @@ public abstract class Kit {
         return this.game;
     }
     public void createInventory(){
-        inventory = new HashMap<Integer, ItemStack>();
+
     }
 
     public void createSettings(){

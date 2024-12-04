@@ -53,4 +53,9 @@ public class Knockback extends Kit {
                 new RemovePlacedBlocks(this)
         };
     }
+
+    @Override
+    public void createMapSettings() {
+        possibleMaps.add(Arena.MAP.GLADIATOR);
+    }
 }
