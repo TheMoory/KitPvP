@@ -16,12 +16,21 @@ public class Lobby extends Kit {
     @Override
     public void createInventory() {
         ItemStack sword = new ItemStack(Material.DIAMOND_SWORD, 1);
+
         ItemStack chest = new ItemStack(Material.CHEST, 1);
         ItemMeta chestMeta = chest.getItemMeta();
-        chestMeta.setDisplayName(ChatColor.GOLD + "Map select");
+        chestMeta.setDisplayName(ChatColor.GOLD + "Kit select");
         chest.setItemMeta(chestMeta);
+
+        ItemStack kit = new ItemStack(Material.GRASS, 1);
+        ItemMeta kiItemMeta = kit.getItemMeta();
+        kiItemMeta.setDisplayName(ChatColor.GOLD + "Map select");
+        kit.setItemMeta(kiItemMeta);
+
         inventory.put(0, sword);
         inventory.put(1, chest);
+        inventory.put(2, kit);
+
     }
 
     @Override

@@ -87,6 +87,17 @@ public class InviteHandler extends GameSetting {
             }
             player.openInventory(inv);
             event.setCancelled(true);
+        } else if(displayName.equals(ChatColor.GOLD + "Kit select")) {
+            Inventory inv = Bukkit.createInventory(null, 6*9, "Wähle ein Kit aus!");
+            for(Kit.KITS kits : Kit.KITS.values()) {
+                ItemStack item = new ItemStack(Material.GRASS);
+                ItemMeta meta = item.getItemMeta();
+                meta.setDisplayName(kits.toString());
+                item.setItemMeta(meta);
+                inv.addItem(item);
+            }
+            player.openInventory(inv);
+            event.setCancelled(true);
         }
     }
 
@@ -102,6 +113,15 @@ public class InviteHandler extends GameSetting {
             if(maps.toString().equals(displayName)){
                 player.sendMessage("Du hast "+maps+" als Map ausgewählt!");
                 KitPvP.getInstance().getCurrentPlayerSetting(player).setMap(maps);
+                event.setCancelled(true);
+                player.closeInventory();
+                return;
+            }
+        }
+        for(Kit.KITS kits : Kit.KITS.values()){
+            if(kits.toString().equals(displayName)){
+                player.sendMessage("Du hast "+kits+" als Kit ausgewählt!");
+                KitPvP.getInstance().getCurrentPlayerSetting(player).setKit(kits.getKit());
                 event.setCancelled(true);
                 player.closeInventory();
                 return;

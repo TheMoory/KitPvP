@@ -3,7 +3,6 @@ package de.themoory.kitpvp.utils;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
-import java.util.Objects;
 
 public class GameStats {
     private final Player player;
@@ -33,8 +32,9 @@ public class GameStats {
         HITS(0, "Hits"),
         MISSED_HITS(0, "Missed Hits"),
         DAMAGE_RECEIVED(0d, "Damage Received"),
-        DAMAGAE_CAUSED(0d, "Damage Caused"),
+        DAMAGE_CAUSED(0d, "Damage Caused"),
         TIME(0, "Time"),
+        HEARTS_LEFT(0, "Hearts Left"),
 
 
 

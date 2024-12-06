@@ -8,8 +8,6 @@ import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 
 import java.util.ArrayList;
 
@@ -35,9 +33,10 @@ public class Knockback extends Kit {
         ArrayList<GameStats.STATSTYPE> stats = new ArrayList<>();
         stats.add(GameStats.STATSTYPE.TIME);
         stats.add(GameStats.STATSTYPE.DAMAGE_RECEIVED);
-        stats.add(GameStats.STATSTYPE.DAMAGAE_CAUSED);
+        stats.add(GameStats.STATSTYPE.DAMAGE_CAUSED);
         stats.add(GameStats.STATSTYPE.MISSED_HITS);
         stats.add(GameStats.STATSTYPE.HITS);
+        stats.add(GameStats.STATSTYPE.HEARTS_LEFT);
         settings = new GameSetting[]{
                 new RemoveDropsAfterGame(this),
                 new RemoveItemsAfterGame(this),

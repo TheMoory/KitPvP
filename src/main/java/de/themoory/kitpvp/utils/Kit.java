@@ -1,5 +1,7 @@
 package de.themoory.kitpvp.utils;
 
+import de.themoory.kitpvp.kits.Knockback;
+import de.themoory.kitpvp.kits.Soup;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;

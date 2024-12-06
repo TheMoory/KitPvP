@@ -1,7 +1,6 @@
 package de.themoory.kitpvp.gamesettings;
 
 import de.themoory.kitpvp.utils.*;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -11,6 +10,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class GameStatsHandler extends GameSetting {
 
@@ -51,6 +51,14 @@ public class GameStatsHandler extends GameSetting {
 
     @Override
     public void onGameEnd(){
+        HashMap<Integer,Double> hearts = new HashMap<>();
+        for(Team team : getGame().getTeams()){
+            double teamHearts = 0;
+            for(Player player : team.getPlayers()){
+                teamHearts = teamHearts + player.getHealth();
+            }
+            hearts.put(team.getTeamID(), teamHearts);
+        }
         for(Team team : getGame().getTeams()){
             for(Player player : team.getPlayers()){
                 GameStats gameStats = getGameStatsFromPlayer(player);
@@ -98,7 +106,7 @@ public class GameStatsHandler extends GameSetting {
             Player damager = (Player) event.getDamager();
             GameStats gameStats = getGameStatsFromPlayer(damager);
             assert gameStats != null;
-            gameStats.setStat(GameStats.STATSTYPE.DAMAGAE_CAUSED, (double) gameStats.getStat(GameStats.STATSTYPE.DAMAGAE_CAUSED) + event.getDamage());
+            gameStats.setStat(GameStats.STATSTYPE.DAMAGE_CAUSED, (double) gameStats.getStat(GameStats.STATSTYPE.DAMAGE_CAUSED) + event.getDamage());
             gameStats.setStat(GameStats.STATSTYPE.HITS, (int) gameStats.getStat(GameStats.STATSTYPE.HITS) + 1);
         }
     }

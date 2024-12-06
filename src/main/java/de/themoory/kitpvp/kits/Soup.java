@@ -10,7 +10,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class Soup extends Kit {
 
@@ -55,9 +54,10 @@ public class Soup extends Kit {
         stats.add(GameStats.STATSTYPE.EATEN_SOUPS);
         stats.add(GameStats.STATSTYPE.TIME);
         stats.add(GameStats.STATSTYPE.DAMAGE_RECEIVED);
-        stats.add(GameStats.STATSTYPE.DAMAGAE_CAUSED);
+        stats.add(GameStats.STATSTYPE.DAMAGE_CAUSED);
         stats.add(GameStats.STATSTYPE.MISSED_HITS);
         stats.add(GameStats.STATSTYPE.HITS);
+        stats.add(GameStats.STATSTYPE.HEARTS_LEFT);
         settings = new GameSetting[]{
                 new RemoveDropsAfterGame(this),
                 new RemoveItemsAfterGame(this),
