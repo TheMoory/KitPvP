@@ -7,6 +7,7 @@ import de.themoory.kitpvp.utils.GameSetting;
 import de.themoory.kitpvp.utils.Kit;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -69,6 +70,13 @@ public class InviteHandler extends GameSetting {
     @Override
     public void onPlayerInteract(PlayerInteractEvent event){
         Player player = event.getPlayer();
+
+        /***dev temp***/
+        if(player.getGameMode().equals(GameMode.CREATIVE)) return;
+
+        if(event.getItem() == null){
+            return;
+        }
         if(event.getItem().getItemMeta() == null){
             return;
         }
@@ -109,22 +117,26 @@ public class InviteHandler extends GameSetting {
         if (event.getCurrentItem().getItemMeta().getDisplayName() == null) return;
         Player player = (Player) event.getWhoClicked();
         String displayName = event.getCurrentItem().getItemMeta().getDisplayName();
-        for(Arena.MAP maps : Arena.MAP.values()){
-            if(maps.toString().equals(displayName)){
-                player.sendMessage("Du hast "+maps+" als Map ausgewählt!");
-                KitPvP.getInstance().getCurrentPlayerSetting(player).setMap(maps);
-                event.setCancelled(true);
-                player.closeInventory();
-                return;
+        if(event.getInventory().getName().equals("Wähle eine Map aus!")){
+            for(Arena.MAP maps : Arena.MAP.values()){
+                if(maps.toString().equals(displayName)){
+                    player.sendMessage("Du hast "+maps+" als Map ausgewählt!");
+                    KitPvP.getInstance().getCurrentPlayerSetting(player).setMap(maps);
+                    event.setCancelled(true);
+                    player.closeInventory();
+                    return;
+                }
             }
         }
-        for(Kit.KITS kits : Kit.KITS.values()){
-            if(kits.toString().equals(displayName)){
-                player.sendMessage("Du hast "+kits+" als Kit ausgewählt!");
-                KitPvP.getInstance().getCurrentPlayerSetting(player).setKit(kits.getKit());
-                event.setCancelled(true);
-                player.closeInventory();
-                return;
+        if(event.getInventory().getName().equals("Wähle ein Kit aus!")) {
+            for (Kit.KITS kits : Kit.KITS.values()) {
+                if (kits.toString().equals(displayName)) {
+                    player.sendMessage("Du hast " + kits + " als Kit ausgewählt!");
+                    KitPvP.getInstance().getCurrentPlayerSetting(player).setKit(kits.getKit());
+                    event.setCancelled(true);
+                    player.closeInventory();
+                    return;
+                }
             }
         }
     }

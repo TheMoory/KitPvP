@@ -5,10 +5,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.UUID;
+import java.util.*;
 
 public class Game {
     private final ArrayList<Team> teams;
@@ -72,7 +71,18 @@ public class Game {
                 return;
             }
         }
-        start();
+        /*if(start().equals(GameStartResult.)){
+
+        }*/
+        GameStartResult gameStartResult = start();
+        if(gameStartResult.equals(GameStartResult.NO_FREE_ARENA_FOUND)){
+            firstPlayer.sendMessage("Zurzeit ist keine Arena frei, du befindest dich nun in der Warteschlange");
+            instance.getArenaQueue().get(this.getArena().getMapType()).add(this);
+        }else{
+            firstPlayer.sendMessage(gameStartResult.toString());
+        }
+
+
     }
 
     public void addDeadTeam(Team team){
@@ -128,6 +138,7 @@ public class Game {
         if(kit == null){
             return GameStartResult.NO_KIT_SELECTED;
         }
+
         if(map == null){
             return GameStartResult.NO_MAP_SELECTED;
         }
@@ -138,6 +149,7 @@ public class Game {
         if((arena = ArenaPool.getFreeArea(map)) == null){
             return GameStartResult.NO_FREE_ARENA_FOUND;
         }
+
         this.setArena(arena);
 
         if(getPlayerCount() < arena.getMinPlayers()){
@@ -164,6 +176,19 @@ public class Game {
             gameSetting.onGameEnd();
         }
         arena.setState(Arena.STATE.WAITING);
+
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                Queue<Game> arenaQueue = instance.getArenaQueue().get(getArena().getMapType());
+                if(!arenaQueue.isEmpty()){
+                    Game game = arenaQueue.poll();
+                    game.setArena(arena);
+                    game.start();
+                }
+            }
+        }.runTaskLater(instance, 20L * 3);
+
     }
 
     public enum GameStartResult{

@@ -55,6 +55,6 @@ public class Knockback extends Kit {
 
     @Override
     public void createMapSettings() {
-        possibleMaps.add(Arena.MAP.GLADIATOR);
+        possibleMaps.add(Arena.MAP.KNOCKBACK);
     }
 }

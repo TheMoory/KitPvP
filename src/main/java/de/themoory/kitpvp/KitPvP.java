@@ -12,6 +12,8 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Queue;
 
 public final class KitPvP extends JavaPlugin {
 
@@ -43,6 +45,8 @@ public final class KitPvP extends JavaPlugin {
     }
 
 
+
+
     public ArrayList<Game> getCurrentGames() {
         return currentGames;
     }
@@ -66,6 +70,11 @@ public final class KitPvP extends JavaPlugin {
     public void addToStagedGames(Game game){
         this.stagedGames.add(game);
     }
+
+    public HashMap<Arena.MAP, Queue<Game>> getArenaQueue() {
+        return arenaQueue;
+    }
+
 
     private void registerEvents() {
 

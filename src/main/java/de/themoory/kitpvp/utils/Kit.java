@@ -6,6 +6,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Queue;
 
 public abstract class Kit {
 
@@ -16,6 +17,7 @@ public abstract class Kit {
 
     protected Game game;
 
+
     public Kit(){
         inventory = new HashMap<>();
         armor = new HashMap<>();
@@ -25,6 +27,8 @@ public abstract class Kit {
         createInventory();
         createSettings();
     }
+
+
     public HashMap<Integer, ItemStack> getInventory(){
         return inventory;
     }
@@ -49,7 +53,23 @@ public abstract class Kit {
     }
 
     public void createSettings(){
-        settings = new GameSetting[]{};
-    };
+    }
+
+
+
+    public enum KITS{
+        KNOCKBACK(new Knockback()),
+        SOUP(new Soup());
+
+        private final Kit kit;
+
+        KITS(Kit kit){
+            this.kit = kit;
+        }
+
+        public Kit getKit() {
+            return kit;
+        }
+    }
 
 }
