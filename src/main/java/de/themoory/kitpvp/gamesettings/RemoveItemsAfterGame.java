@@ -27,6 +27,7 @@ public class RemoveItemsAfterGame extends GameSetting {
                     player.getInventory().setLeggings(null);
                     player.getInventory().setBoots(null);
                     player.setHealth(20);
+                    System.out.println(player.getName());
                     player.teleport(new Location(Bukkit.getWorld("world"), 63, 85, -65, 0, 0));
                 }
             }

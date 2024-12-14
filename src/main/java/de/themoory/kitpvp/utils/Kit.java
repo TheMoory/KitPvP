@@ -1,6 +1,7 @@
 package de.themoory.kitpvp.utils;
 
 import de.themoory.kitpvp.kits.Knockback;
+import de.themoory.kitpvp.kits.Lobby;
 import de.themoory.kitpvp.kits.Soup;
 import org.bukkit.inventory.ItemStack;
 
@@ -61,10 +62,10 @@ public abstract class Kit {
         KNOCKBACK(new Knockback()),
         SOUP(new Soup());
 
-        private final Kit kit;
+        private final Class<? extends Kit> clazz;
 
-        KITS(Kit kit){
-            this.kit = kit;
+        KITS(Class<? extends Kit> clazz){
+            this.clazz = clazz;
         }
 
         public Kit getKit() {

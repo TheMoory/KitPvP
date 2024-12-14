@@ -81,8 +81,6 @@ public class Game {
         }else{
             firstPlayer.sendMessage(gameStartResult.toString());
         }
-
-
     }
 
     public void addDeadTeam(Team team){
@@ -175,6 +173,7 @@ public class Game {
         for(GameSetting gameSetting : settings){
             gameSetting.onGameEnd();
         }
+
         arena.setState(Arena.STATE.WAITING);
 
         new BukkitRunnable() {
