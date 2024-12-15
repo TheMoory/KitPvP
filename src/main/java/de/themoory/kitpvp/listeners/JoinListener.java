@@ -15,6 +15,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class JoinListener implements Listener {
     @EventHandler
@@ -26,7 +27,7 @@ public class JoinListener implements Listener {
 
     @EventHandler
     public void PlayerQuitEvent(PlayerQuitEvent e){
-        GameSetting[] settings = Utils.getGameSettingsFromGame(KitPvP.getInstance().getCurrentGameOfPlayer(e.getPlayer()));
+        ArrayList<GameSetting> settings = Utils.getGameSettingsFromGame(KitPvP.getInstance().getCurrentGameOfPlayer(e.getPlayer()));
         for (GameSetting gameSetting : settings) {
             gameSetting.onPlayerQuit(e);
         }

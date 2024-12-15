@@ -15,6 +15,8 @@ public class Team {
     private final int teamID;
 
     private HashMap<UUID, Integer> deaths;
+
+
     public Team(Player player, int teamID, int maxPlayers){
         this.deaths = new HashMap<>();
         this.players = new ArrayList<>();
@@ -24,7 +26,6 @@ public class Team {
         }
         this.teamID = teamID;
         this.maxPlayers = maxPlayers;
-        this.deaths = new HashMap<>();
     }
 
     public void addPlayer(Player player){
@@ -35,6 +36,7 @@ public class Team {
     public void removePlayer(Player player){
         this.players.remove(player);
         this.deaths.remove(player.getUniqueId());
+
     }
 
     public ArrayList<Player> getPlayers() {

@@ -169,7 +169,7 @@ public class Game {
     public void onEnd(int winnerTeamID){
         arena.setState(Arena.STATE.RESTARTING);
         instance.removeCurrentGames(this);
-        GameSetting[] settings = Utils.getGameSettingsFromGame(this);
+        ArrayList<GameSetting> settings = Utils.getGameSettingsFromGame(this);
         for(GameSetting gameSetting : settings){
             gameSetting.onGameEnd();
         }

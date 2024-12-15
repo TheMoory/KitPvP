@@ -9,11 +9,12 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class InventoryInteractListener implements Listener {
     @EventHandler
     public void PlayerInteractEvent(PlayerInteractEvent e) throws SQLException {
-        GameSetting[] settings = Utils.getGameSettingsFromGame(
+        ArrayList<GameSetting> settings = Utils.getGameSettingsFromGame(
                 KitPvP.getInstance().getCurrentGameOfPlayer(e.getPlayer()));
         for(GameSetting gameSetting : settings){
             gameSetting.onPlayerInteraction(e);

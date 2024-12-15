@@ -9,11 +9,12 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class InventoryClickListener implements Listener {
     @EventHandler
     public void InventoryClickEvent(InventoryClickEvent e) throws SQLException, IllegalArgumentException{
-        GameSetting[] settings = Utils.getGameSettingsFromGame(
+        ArrayList<GameSetting> settings = Utils.getGameSettingsFromGame(
                 KitPvP.getInstance().getCurrentGameOfPlayer((Player) e.getWhoClicked()));
         for(GameSetting gameSetting : settings){
             gameSetting.onInventoryClick(e);

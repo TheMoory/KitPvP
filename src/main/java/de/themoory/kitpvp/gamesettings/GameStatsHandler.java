@@ -7,6 +7,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.player.PlayerAnimationEvent;
+import org.bukkit.event.player.PlayerAnimationType;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 import java.util.ArrayList;
@@ -108,14 +110,29 @@ public class GameStatsHandler extends GameSetting {
             assert gameStats != null;
             gameStats.setStat(GameStats.STATSTYPE.DAMAGE_CAUSED, (double) gameStats.getStat(GameStats.STATSTYPE.DAMAGE_CAUSED) + event.getDamage());
             gameStats.setStat(GameStats.STATSTYPE.HITS, (int) gameStats.getStat(GameStats.STATSTYPE.HITS) + 1);
+            gameStats.setStat(GameStats.STATSTYPE.MISSED_HITS, (int) gameStats.getStat(GameStats.STATSTYPE.MISSED_HITS) - 1);
         }
     }
 
-    @Override
+    /*@Override
     public void onPlayerInteract(PlayerInteractEvent event){
         if(kit.getGame().getGameState().equals(Game.GameState.RUNNING)){
             GameStats gameStats = getGameStatsFromPlayer(event.getPlayer());
+            System.out.println("Interacrt!: "+event.getAction());
             if(event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK){
+                assert gameStats != null;
+                gameStats.setStat(GameStats.STATSTYPE.MISSED_HITS, (int) gameStats.getStat(GameStats.STATSTYPE.MISSED_HITS) + 1);
+            }
+        }
+    }*/
+
+    @Override
+    public void onPlayerSwing(PlayerAnimationEvent event){
+        if(kit.getGame().getGameState().equals(Game.GameState.RUNNING)){
+            GameStats gameStats = getGameStatsFromPlayer(event.getPlayer());
+            System.out.println(event.getAnimationType());
+            if(event.getAnimationType().equals(PlayerAnimationType.ARM_SWING)){
+                assert gameStats != null;
                 gameStats.setStat(GameStats.STATSTYPE.MISSED_HITS, (int) gameStats.getStat(GameStats.STATSTYPE.MISSED_HITS) + 1);
             }
         }

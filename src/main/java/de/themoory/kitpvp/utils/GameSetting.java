@@ -3,10 +3,7 @@ package de.themoory.kitpvp.utils;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.FoodLevelChangeEvent;
-import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.entity.*;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.*;
 
@@ -57,6 +54,12 @@ public abstract class GameSetting {
 
     public void onPlayerBucketFill(PlayerBucketFillEvent e){
 
+    }
+
+    public void onPlayerSwing(PlayerAnimationEvent event){
+    }
+
+    public void onProjectileLaunch(ProjectileLaunchEvent event){
     }
 
     public void onPlayerBucketEmpty(PlayerBucketEmptyEvent e){

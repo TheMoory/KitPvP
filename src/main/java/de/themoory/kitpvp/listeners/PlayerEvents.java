@@ -8,10 +8,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.FoodLevelChangeEvent;
-import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.entity.*;
 import org.bukkit.event.player.*;
 import org.bukkit.event.weather.WeatherChangeEvent;
 
@@ -21,7 +18,7 @@ public class PlayerEvents implements Listener {
 
     @EventHandler
     public void onMove(PlayerMoveEvent e) throws SQLException {
-        GameSetting[] settings = Utils.getGameSettingsFromGame(KitPvP.getInstance().getCurrentGameOfPlayer(e.getPlayer()));
+        ArrayList<GameSetting> settings = Utils.getGameSettingsFromGame(KitPvP.getInstance().getCurrentGameOfPlayer(e.getPlayer()));
         for(GameSetting gameSetting : settings){
             gameSetting.onMove(e);
         }
@@ -30,7 +27,7 @@ public class PlayerEvents implements Listener {
 
     @EventHandler
     public void onDrop(PlayerDropItemEvent e) {
-        GameSetting[] settings = Utils.getGameSettingsFromGame(KitPvP.getInstance().getCurrentGameOfPlayer(e.getPlayer()));
+        ArrayList<GameSetting> settings = Utils.getGameSettingsFromGame(KitPvP.getInstance().getCurrentGameOfPlayer(e.getPlayer()));
         for(GameSetting gameSetting : settings){
             gameSetting.onDrop(e);
         }
@@ -38,7 +35,7 @@ public class PlayerEvents implements Listener {
 
     @EventHandler
     public void PlayerAchievementAwardedEvent(PlayerAchievementAwardedEvent e) {
-        GameSetting[] settings = Utils.getGameSettingsFromGame(KitPvP.getInstance().getCurrentGameOfPlayer(e.getPlayer()));
+        ArrayList<GameSetting> settings = Utils.getGameSettingsFromGame(KitPvP.getInstance().getCurrentGameOfPlayer(e.getPlayer()));
         for(GameSetting gameSetting : settings){
             gameSetting.onAchievementAwarded(e);
         }
@@ -48,7 +45,7 @@ public class PlayerEvents implements Listener {
     @EventHandler
     public void onHunger(FoodLevelChangeEvent e) {
         e.setCancelled(true);
-        GameSetting[] settings = Utils.getGameSettingsFromGame(KitPvP.getInstance().getCurrentGameOfPlayer((Player)e.getEntity()));
+        ArrayList<GameSetting> settings = Utils.getGameSettingsFromGame(KitPvP.getInstance().getCurrentGameOfPlayer((Player)e.getEntity()));
         for(GameSetting gameSetting : settings){
             gameSetting.onHunger(e);
         }
@@ -66,7 +63,7 @@ public class PlayerEvents implements Listener {
     @EventHandler
     public void onDamage(EntityDamageEvent e) {
         if(e.getEntity() instanceof Player) {
-            GameSetting[] settings = Utils.getGameSettingsFromGame(KitPvP.getInstance().getCurrentGameOfPlayer((Player) e.getEntity()));
+            ArrayList<GameSetting> settings = Utils.getGameSettingsFromGame(KitPvP.getInstance().getCurrentGameOfPlayer((Player) e.getEntity()));
             for (GameSetting gameSetting : settings) {
                 gameSetting.onDamage(e);
             }
@@ -76,7 +73,7 @@ public class PlayerEvents implements Listener {
     @EventHandler
     public void onEntityDamageByEntityEvent(EntityDamageByEntityEvent e){
         if(e.getEntity() instanceof Player) {
-            GameSetting[] settings = Utils.getGameSettingsFromGame(KitPvP.getInstance().getCurrentGameOfPlayer((Player) e.getEntity()));
+            ArrayList<GameSetting> settings = Utils.getGameSettingsFromGame(KitPvP.getInstance().getCurrentGameOfPlayer((Player) e.getEntity()));
             for (GameSetting gameSetting : settings) {
                 gameSetting.onDamageByEntity(e);
             }
@@ -85,7 +82,7 @@ public class PlayerEvents implements Listener {
 
     @EventHandler
     public void onDeath(PlayerDeathEvent e){
-        GameSetting[] settings = Utils.getGameSettingsFromGame(KitPvP.getInstance().getCurrentGameOfPlayer(e.getEntity()));
+        ArrayList<GameSetting> settings = Utils.getGameSettingsFromGame(KitPvP.getInstance().getCurrentGameOfPlayer(e.getEntity()));
         for (GameSetting gameSetting : settings) {
             gameSetting.onDeath(e);
         }
@@ -128,6 +125,25 @@ public class PlayerEvents implements Listener {
         GameSetting[] settings = Utils.getGameSettingsFromGame(KitPvP.getInstance().getCurrentGameOfPlayer(e.getPlayer()));
         for (GameSetting gameSetting : settings) {
             gameSetting.onPlayerBucketFill(e);
+        }
+    }
+
+
+    @EventHandler
+    public void onPlayerSwing(PlayerAnimationEvent e){
+        ArrayList<GameSetting> settings = Utils.getGameSettingsFromGame(KitPvP.getInstance().getCurrentGameOfPlayer(e.getPlayer()));
+        for (GameSetting gameSetting : settings) {
+            gameSetting.onPlayerSwing(e);
+        }
+    }
+
+    @EventHandler
+    public void onProjectileLaunch(ProjectileLaunchEvent e) {
+        if(e.getEntity().getShooter() instanceof Player){
+            ArrayList<GameSetting> settings = Utils.getGameSettingsFromGame(KitPvP.getInstance().getCurrentGameOfPlayer((Player) e.getEntity().getShooter()));
+            for (GameSetting gameSetting : settings) {
+                gameSetting.onProjectileLaunch(e);
+            }
         }
     }
 }

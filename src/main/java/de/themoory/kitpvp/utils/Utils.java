@@ -5,11 +5,12 @@ import de.themoory.kitpvp.kits.Lobby;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Utils {
 
-    public static GameSetting[] getGameSettingsFromGame(Game g){
+    public static ArrayList<GameSetting> getGameSettingsFromGame(Game g){
         Kit k;
         if(g == null || g.getGameState() == Game.GameState.WAITING){
             k = new Lobby();

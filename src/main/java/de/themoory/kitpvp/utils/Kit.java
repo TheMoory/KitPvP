@@ -3,7 +3,10 @@ package de.themoory.kitpvp.utils;
 import de.themoory.kitpvp.kits.Knockback;
 import de.themoory.kitpvp.kits.Lobby;
 import de.themoory.kitpvp.kits.Soup;
+import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -64,12 +67,19 @@ public abstract class Kit {
 
         private final Class<? extends Kit> clazz;
 
-        KITS(Class<? extends Kit> clazz){
+        private final ItemStack itemStack;
+
+        KITS(Class<? extends Kit> clazz, ItemStack itemStack){
             this.clazz = clazz;
+            this.itemStack = itemStack;
         }
 
         public Kit getKit() {
             return kit;
+        }
+
+        public ItemStack getItemStack() {
+            return itemStack;
         }
     }
 
