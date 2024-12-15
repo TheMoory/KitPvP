@@ -27,9 +27,16 @@ public class Lobby extends Kit {
         kiItemMeta.setDisplayName(ChatColor.GOLD + "Map select");
         kit.setItemMeta(kiItemMeta);
 
+        ItemStack comparator = new ItemStack(Material.REDSTONE_COMPARATOR, 1);
+        ItemMeta comparatorMeta = comparator.getItemMeta();
+        comparatorMeta.setDisplayName(ChatColor.DARK_RED + "Settings");
+        comparator.setItemMeta(comparatorMeta);
+
+
         inventory.put(0, sword);
         inventory.put(1, chest);
         inventory.put(2, kit);
+        inventory.put(3, comparator);
 
     }
 

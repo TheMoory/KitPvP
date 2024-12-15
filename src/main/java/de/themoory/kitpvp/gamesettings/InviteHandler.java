@@ -95,7 +95,7 @@ public class InviteHandler extends GameSetting {
             }
             player.openInventory(inv);
             event.setCancelled(true);
-        } else if(displayName.equals(ChatColor.GOLD + "Kit select")) {
+        }else if(displayName.equals(ChatColor.GOLD + "Kit select")) {
             Inventory inv = Bukkit.createInventory(null, 6*9, "Wähle ein Kit aus!");
             for(Kit.KITS kits : Kit.KITS.values()) {
                 ItemStack item = new ItemStack(Material.GRASS);
@@ -106,10 +106,19 @@ public class InviteHandler extends GameSetting {
             }
             player.openInventory(inv);
             event.setCancelled(true);
+        }else if(displayName.equals(ChatColor.DARK_RED + "Settings")) {
+            Inventory inv = Bukkit.createInventory(null, 6*9, "Wähle ein Setting aus!");
+            for(Arena.MODE mode : Arena.MODE.values()) {
+                ItemStack item = new ItemStack(Material.SKULL_ITEM);
+                ItemMeta meta = item.getItemMeta();
+                meta.setDisplayName(mode.toString());
+                item.setItemMeta(meta);
+                inv.addItem(item);
+            }
+            player.openInventory(inv);
+            event.setCancelled(true);
         }
     }
-
-
     @Override
     public void onInventoryClick(InventoryClickEvent event) {
         if(event.getCurrentItem() == null) return;
@@ -139,5 +148,18 @@ public class InviteHandler extends GameSetting {
                 }
             }
         }
+
+        if(event.getInventory().getName().equals("Wähle ein Setting aus!")) {
+            for (Arena.MODE mode : Arena.MODE.values()) {
+                if (mode.toString().equals(displayName)) {
+                    player.sendMessage("Du hast " + mode + " ausgewählt!");
+                    KitPvP.getInstance().getCurrentPlayerSetting(player).setMode(mode);
+                    event.setCancelled(true);
+                    player.closeInventory();
+                    return;
+                }
+            }
+        }
+
     }
 }

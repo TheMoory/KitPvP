@@ -2,10 +2,15 @@ package de.themoory.kitpvp.gamesettings;
 
 import de.themoory.kitpvp.utils.GameSetting;
 import de.themoory.kitpvp.utils.Kit;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Item;
+import org.bukkit.entity.Player;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class RemoveDropsAfterGame extends GameSetting {
 
@@ -23,6 +28,16 @@ public class RemoveDropsAfterGame extends GameSetting {
     public void onGameEnd() {
         for(Item i: droppedItems){
             i.remove();
+        }
+    }
+
+    @Override
+    public void onDeath(PlayerDeathEvent event){
+        Player player = event.getEntity();
+        List<ItemStack> items = event.getDrops();
+        event.getDrops().clear();
+        for(ItemStack i: items){
+            droppedItems.add(player.getWorld().dropItem(player.getLocation(), i));
         }
     }
 }
