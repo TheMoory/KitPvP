@@ -62,6 +62,7 @@ public abstract class GameSetting {
     public void onProjectileLaunch(ProjectileLaunchEvent event){
     }
 
+
     public void onPlayerBucketEmpty(PlayerBucketEmptyEvent e){
 
     }

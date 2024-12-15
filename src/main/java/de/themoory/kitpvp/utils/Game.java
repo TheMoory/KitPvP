@@ -1,6 +1,7 @@
 package de.themoory.kitpvp.utils;
 
 import de.themoory.kitpvp.KitPvP;
+import de.themoory.kitpvp.gamesettings.XLive;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -31,9 +32,12 @@ public class Game {
 
     private final UUID uuid;
 
+    private final Player firstPlayer;
+
 
     public Game(KitPvP instance, Player firstPlayer, Arena.MODE mode){
         this.instance = instance;
+        this.firstPlayer = firstPlayer;
         this.uuid = UUID.randomUUID();
         this.mode = mode;
         this.kit = null;
@@ -77,7 +81,11 @@ public class Game {
         GameStartResult gameStartResult = start();
         if(gameStartResult.equals(GameStartResult.NO_FREE_ARENA_FOUND)){
             firstPlayer.sendMessage("Zurzeit ist keine Arena frei, du befindest dich nun in der Warteschlange");
-            instance.getArenaQueue().get(this.getArena().getMapType()).add(this);
+            Arena.MAP mapType = KitPvP.getInstance().getCurrentPlayerSetting(firstPlayer).getMap();
+            if(mapType != null){
+                instance.getArenaQueue().get(mapType).add(this);
+                this.gameState = GameState.QUEDED;
+            }
         }else{
             firstPlayer.sendMessage(gameStartResult.toString());
         }
@@ -132,13 +140,18 @@ public class Game {
 
 
     public boolean isInvited(Player player) {return invites.contains(player.getUniqueId());}
+
     public GameStartResult start(){
+        System.out.println("Starting game!");
+
+        setKit(KitPvP.getInstance().getCurrentPlayerSetting(firstPlayer).getKit());
+        setMap(KitPvP.getInstance().getCurrentPlayerSetting(firstPlayer).getMap());
         if(kit == null){
             return GameStartResult.NO_KIT_SELECTED;
         }
 
         if(map == null){
-            return GameStartResult.NO_MAP_SELECTED;
+            setMap(kit.possibleMaps.get((new Random()).nextInt(kit.possibleMaps.size())));
         }
 
 
@@ -154,8 +167,8 @@ public class Game {
             return GameStartResult.NOT_ENOUGH_PLAYERS;
         }
 
+        getKit().addGameSetting(new XLive(getKit(), KitPvP.getInstance().getCurrentPlayerSetting(firstPlayer).getLives(), true));
         //Starting
-
         for(GameSetting gameSetting : getKit().getGameSettings()){
             gameSetting.onGameStart();
         }
@@ -225,6 +238,10 @@ public class Game {
         return gameState;
     }
 
+    public void setGameState(GameState gameState) {
+        this.gameState = gameState;
+    }
+
     public ArrayList<Player> getSpectators() {
         return spectators;
     }
@@ -235,6 +252,7 @@ public class Game {
 
     public enum GameState{
         WAITING,
+        QUEDED,
         RUNNING
     }
 

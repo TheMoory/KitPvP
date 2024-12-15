@@ -8,6 +8,9 @@ public class PlayerSettings {
 
     private Kit kit;
     private Arena.MAP map;
+    private Arena.MODE mode;
+    private int lives;
+
     public PlayerSettings(Player p){
         this.player = p;
         kit = new Soup();
@@ -23,6 +26,22 @@ public class PlayerSettings {
 
     public Kit getKit(){
         return kit;
+    }
+
+    public void setMode(Arena.MODE mode){
+        this.mode = mode;
+    }
+
+    public Arena.MODE getMode(){
+        return mode;
+    }
+
+    public void setLives(int lives){
+        this.lives = lives;
+    }
+
+    public int getLives(){
+        return lives;
     }
 
     public Arena.MAP getMap(){

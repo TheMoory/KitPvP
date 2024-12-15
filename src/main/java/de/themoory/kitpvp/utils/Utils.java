@@ -18,7 +18,7 @@ public class Utils {
             k = g.getKit();
         }
         if(k == null){
-            return new GameSetting[0];
+            return new ArrayList<>();
         }
         return k.getGameSettings();
     }

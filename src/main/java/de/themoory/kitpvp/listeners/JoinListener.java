@@ -1,6 +1,8 @@
 package de.themoory.kitpvp.listeners;
 
 import de.themoory.kitpvp.KitPvP;
+import de.themoory.kitpvp.gamesettings.KitItemSetter;
+import de.themoory.kitpvp.kits.Lobby;
 import de.themoory.kitpvp.utils.GameSetting;
 import de.themoory.kitpvp.utils.Utils;
 import org.bukkit.ChatColor;

@@ -13,6 +13,7 @@ import org.bukkit.event.player.*;
 import org.bukkit.event.weather.WeatherChangeEvent;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class PlayerEvents implements Listener {
 
@@ -90,7 +91,7 @@ public class PlayerEvents implements Listener {
 
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent e){
-        GameSetting[] settings = Utils.getGameSettingsFromGame(KitPvP.getInstance().getCurrentGameOfPlayer(e.getPlayer()));
+        ArrayList<GameSetting> settings = Utils.getGameSettingsFromGame(KitPvP.getInstance().getCurrentGameOfPlayer(e.getPlayer()));
         for (GameSetting gameSetting : settings) {
             gameSetting.onPlayerInteract(e);
         }
@@ -98,7 +99,7 @@ public class PlayerEvents implements Listener {
 
     @EventHandler
     public void onBlockBreak(BlockBreakEvent e){
-        GameSetting[] settings = Utils.getGameSettingsFromGame(KitPvP.getInstance().getCurrentGameOfPlayer(e.getPlayer()));
+        ArrayList<GameSetting> settings = Utils.getGameSettingsFromGame(KitPvP.getInstance().getCurrentGameOfPlayer(e.getPlayer()));
         for (GameSetting gameSetting : settings) {
             gameSetting.onBlockBreak(e);
         }
@@ -106,7 +107,7 @@ public class PlayerEvents implements Listener {
 
     @EventHandler
     public void onBlockPlace(BlockPlaceEvent e){
-        GameSetting[] settings = Utils.getGameSettingsFromGame(KitPvP.getInstance().getCurrentGameOfPlayer(e.getPlayer()));
+        ArrayList<GameSetting> settings = Utils.getGameSettingsFromGame(KitPvP.getInstance().getCurrentGameOfPlayer(e.getPlayer()));
         for (GameSetting gameSetting : settings) {
             gameSetting.onBlockPlace(e);
         }
@@ -114,7 +115,7 @@ public class PlayerEvents implements Listener {
 
     @EventHandler
     public void onPlayerBucketEmpty(PlayerBucketEmptyEvent e){
-        GameSetting[] settings = Utils.getGameSettingsFromGame(KitPvP.getInstance().getCurrentGameOfPlayer(e.getPlayer()));
+        ArrayList<GameSetting> settings = Utils.getGameSettingsFromGame(KitPvP.getInstance().getCurrentGameOfPlayer(e.getPlayer()));
         for (GameSetting gameSetting : settings) {
             gameSetting.onPlayerBucketEmpty(e);
         }
@@ -122,7 +123,7 @@ public class PlayerEvents implements Listener {
 
     @EventHandler
     public void onPlayerBucketFill(PlayerBucketFillEvent e){
-        GameSetting[] settings = Utils.getGameSettingsFromGame(KitPvP.getInstance().getCurrentGameOfPlayer(e.getPlayer()));
+        ArrayList<GameSetting> settings = Utils.getGameSettingsFromGame(KitPvP.getInstance().getCurrentGameOfPlayer(e.getPlayer()));
         for (GameSetting gameSetting : settings) {
             gameSetting.onPlayerBucketFill(e);
         }

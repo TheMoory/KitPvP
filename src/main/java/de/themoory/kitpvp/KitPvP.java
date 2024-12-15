@@ -2,10 +2,7 @@ package de.themoory.kitpvp;
 
 import de.themoory.kitpvp.commands.KitPvPCMD;
 import de.themoory.kitpvp.listeners.*;
-import de.themoory.kitpvp.utils.Arena;
-import de.themoory.kitpvp.utils.ArenaPool;
-import de.themoory.kitpvp.utils.Game;
-import de.themoory.kitpvp.utils.Team;
+import de.themoory.kitpvp.utils.*;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
@@ -23,14 +20,27 @@ public final class KitPvP extends JavaPlugin {
 
     private ArrayList<Game> currentGames;
     private ArrayList<Game> stagedGames;
+    private ArrayList<PlayerSettings> playerSettings;
+
+    HashMap<Arena.MAP, Queue<Game>> arenaQueue;
+
 
     @Override
     public void onEnable() {
+        Bukkit.getWorld("world").setGameRuleValue("keepInventory", "true");
         instance = this;
         registerEvents();
         registerCommands();
         stagedGames = new ArrayList<>();
         currentGames = new ArrayList<>();
+        playerSettings = new ArrayList<>();
+        arenaQueue = new HashMap<>();
+
+
+        for(Arena.MAP mapping : Arena.MAP.values()) {
+            arenaQueue.put(mapping, new LinkedList<>());
+        }
+
         new ArenaPool();
         // Plugin startup logic
 
@@ -87,7 +97,6 @@ public final class KitPvP extends JavaPlugin {
         pluginManager.registerEvents(new PlayerEvents(), this);
 
     }
-
     private void registerCommands() {
         //getCommand("kitpvp").setExecutor(new KitPvPCMD());
     }
@@ -114,4 +123,16 @@ public final class KitPvP extends JavaPlugin {
         }
         return null;
     }
+
+    public PlayerSettings getCurrentPlayerSetting(Player p) {
+        for(PlayerSettings settings : playerSettings) {
+            if(settings.getPlayer().getUniqueId() == p.getUniqueId()){
+                return settings;
+            }
+        }
+        PlayerSettings newSettings = new PlayerSettings(p);
+        playerSettings.add(newSettings);
+        return newSettings;
+    }
+
 }

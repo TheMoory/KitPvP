@@ -54,7 +54,7 @@ public class InviteHandler extends GameSetting {
                 if(gameOfDamaged == null) {
                     e.setCancelled(true);
                     if(gameOfDamager == null){
-                        gameOfDamager = new Game(KitPvP.getInstance(), (Player)e.getDamager(), Arena.MODE.one_vs_one);
+                        gameOfDamager = new Game(KitPvP.getInstance(), (Player)e.getDamager(), KitPvP.getInstance().getCurrentPlayerSetting(damager).getMode());
                         //KitPvP.getInstance().addToStagedGames(gameOfDamager); Wird schon beim ersteller des Game Objektes hinzugefügt --- Oder besser hier machen?
 
                     }
@@ -140,9 +140,17 @@ public class InviteHandler extends GameSetting {
             for(Arena.MAP maps : Arena.MAP.values()){
                 if(maps.toString().equals(displayName)){
                     player.sendMessage("Du hast "+maps+" als Map ausgewählt!");
-                    KitPvP.getInstance().getCurrentPlayerSetting(player).setMap(maps);
+                    Game gameOfPlayer = KitPvP.getInstance().getCurrentGameOfPlayer(player);
                     event.setCancelled(true);
                     player.closeInventory();
+                    if(gameOfPlayer != null && gameOfPlayer.getGameState() == Game.GameState.QUEDED) {
+                        Arena.MAP currentMap = KitPvP.getInstance().getCurrentPlayerSetting(player).getMap();
+                        KitPvP.getInstance().getArenaQueue().get(currentMap).remove(gameOfPlayer);
+                        KitPvP.getInstance().getCurrentPlayerSetting(player).setMap(maps);
+                        gameOfPlayer.start();
+                    } else {
+                        KitPvP.getInstance().getCurrentPlayerSetting(player).setMap(maps);
+                    }
                     return;
                 }
             }

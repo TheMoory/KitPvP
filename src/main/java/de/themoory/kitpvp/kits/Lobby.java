@@ -42,6 +42,9 @@ public class Lobby extends Kit {
 
     @Override
     public void createSettings() {
-        settings = new GameSetting[]{new NoHunger(this), new Invincible(this), new InviteHandler(this), new TeleportToSpawn(this, 80), /*new PreventBreakingBlocks(this)*/};
+        settings.add(new NoHunger(this));
+        settings.add(new Invincible(this));
+        settings.add(new InviteHandler(this));
+        settings.add(new TeleportToSpawn(this, 80));
     }
 }

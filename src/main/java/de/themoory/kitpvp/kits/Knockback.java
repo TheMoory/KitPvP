@@ -1,6 +1,7 @@
 package de.themoory.kitpvp.kits;
 
 import de.themoory.kitpvp.gamesettings.*;
+import de.themoory.kitpvp.utils.Arena;
 import de.themoory.kitpvp.utils.GameSetting;
 import de.themoory.kitpvp.utils.GameStats;
 import de.themoory.kitpvp.utils.Kit;
@@ -37,21 +38,18 @@ public class Knockback extends Kit {
         stats.add(GameStats.STATSTYPE.MISSED_HITS);
         stats.add(GameStats.STATSTYPE.HITS);
         stats.add(GameStats.STATSTYPE.HEARTS_LEFT);
-        settings = new GameSetting[]{
-                new RemoveDropsAfterGame(this),
-                new RemoveItemsAfterGame(this),
-                new KitItemSetter(this),
-                new GameStatsHandler(this, stats),
-                new NoHunger(this),
-                new Souping(this),
-                new OneLive(this),
-                new NoFallDamage(this),
+        settings.add(new RemoveDropsAfterGame(this));
+        settings.add(new RemoveItemsAfterGame(this));
+        settings.add(new KitItemSetter(this));
+        settings.add(new GameStatsHandler(this, stats));
+        settings.add(new NoHunger(this));
+        settings.add(new Souping(this));
+        settings.add(new NoFallDamage(this));
                 //new ConstantEffect(this, new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 9999999, 999999,false, false)),
-                new DeathUnderHeight(this, 0),
-                new PreventBreakingBlocks(this),
-                new RemovePlacedBlocks(this)
+        settings.add(new DeathUnderHeight(this, 0));
+        settings.add(new PreventBreakingBlocks(this));
+        settings.add(new RemovePlacedBlocks(this));
         };
-    }
 
     @Override
     public void createMapSettings() {
