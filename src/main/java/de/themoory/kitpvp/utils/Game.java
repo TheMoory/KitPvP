@@ -167,7 +167,7 @@ public class Game {
             return GameStartResult.NOT_ENOUGH_PLAYERS;
         }
 
-        getKit().addGameSetting(new XLive(getKit(), KitPvP.getInstance().getCurrentPlayerSetting(firstPlayer).getLives(), true));
+        getKit().addGameSetting(new XLive(getKit(), KitPvP.getInstance().getCurrentPlayerSetting(firstPlayer).getLives(), false));
         //Starting
         for(GameSetting gameSetting : getKit().getGameSettings()){
             gameSetting.onGameStart();

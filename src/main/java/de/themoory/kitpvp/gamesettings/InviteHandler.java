@@ -159,7 +159,7 @@ public class InviteHandler extends GameSetting {
             for (Kit.KITS kits : Kit.KITS.values()) {
                 if (kits.toString().equals(displayName)) {
                     player.sendMessage("Du hast " + kits + " als Kit ausgewählt!");
-                    KitPvP.getInstance().getCurrentPlayerSetting(player).setKit(kits.getKit());
+                    KitPvP.getInstance().getCurrentPlayerSetting(player).setKit(kits);
                     event.setCancelled(true);
                     player.closeInventory();
                     return;
